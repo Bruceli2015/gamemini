@@ -1,152 +1,848 @@
-<!-- 新建 HTML，右下角可预览 -->
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>点击赚钱小游戏</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "微软雅黑", sans-serif;
-        }
-        body {
-            background: #121212;
-            color: #fff;
-            text-align: center;
-            padding-top: 50px;
-        }
-        .money {
-            font-size: 40px;
-            color: #ffd700;
-            font-weight: bold;
-            margin-bottom: 30px;
-        }
-        .per {
-            font-size: 18px;
-            color: #ccc;
-            margin-bottom: 40px;
-        }
-        #clickBtn {
-            width: 220px;
-            height: 220px;
-            border-radius: 50%;
-            background: linear-gradient(145deg,#ff9500,#ff3b30);
-            border: none;
-            font-size: 28px;
-            color: #fff;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 0 30px #ff660080;
-            transition: 0.1s;
-        }
-        #clickBtn:active {
-            transform: scale(0.92);
-        }
-        .btns {
-            margin-top: 50px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            align-items: center;
-        }
-        .optBtn {
-            width: 260px;
-            padding: 15px;
-            font-size: 18px;
-            border-radius: 12px;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        #autoBtn {
-            background: #007aff;
-            color: #fff;
-        }
-        #upBtn {
-            background: #34c759;
-            color: #fff;
-        }
-        .tip {
-            margin-top: 20px;
-            color: #888;
-            font-size: 14px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>20款精品小游戏合集 - 全员可玩 正式版</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script>
+tailwind.config={theme:{extend:{colors:{pri:'#7c3aed',sec:'#ec4899'}}}}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:linear-gradient(135deg,#7c3aed,#ec4899);min-height:100vh;font-family:system-ui;overflow-x:hidden;}
+.glass{background:rgba(255,255,255,0.15);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.25);}
+.game-card{transition:all 0.3s ease;}
+.game-card:hover{transform:translateY(-6px);box-shadow:0 10px 30px rgba(0,0,0,0.2);}
+#gameContainer{display:none;}
+canvas{border-radius:12px;background:#fff;margin:0 auto;display:block;}
+.btn{transition:all 0.2s;}
+.btn:active{scale:0.95;}
+.grid-cell{background:#eee;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:bold;cursor:pointer;user-select:none;}
+</style>
 </head>
-<body>
+<body class="text-white">
 
-    <div class="money">💰 金钱：<span id="moneyNum">0</span> 元</div>
-    <div class="per">每次点击：<span id="perNum">1</span> 元 | 等级：<span id="level">1</span></div>
+<!-- 首页 -->
+<div id="homePage" class="container mx-auto px-3 py-6">
+  <div class="glass rounded-2xl p-4 mb-6 text-center">
+    <h1 class="text-2xl md:text-3xl font-bold"><i class="fa fa-gamepad mr-2"></i>20款小游戏合集</h1>
+    <p class="mt-2 text-white/80 text-sm">全部可玩 · 免下载 · 手机电脑通用</p>
+  </div>
 
-    <button id="clickBtn">点击赚钱</button>
-
-    <div class="btns">
-        <button class="optBtn" id="autoBtn">开启自动点击</button>
-        <button class="optBtn" id="upBtn">升级点击 (花费500元)</button>
+  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+    <div onclick="openGame(1)" class="game-card bg-white/90 rounded-xl p-4 text-center text-gray-800 cursor-pointer">
+      <div class="text-3xl text-green-500 mb-2"><i class="fa fa-paw"></i></div>
+      <div class="font-semibold">贪吃蛇</div>
     </div>
+    <div onclick="openGame(2)" class="game-card bg-white/90 rounded-xl p-4 text-center text-gray-800 cursor-pointer">
+      <div class="text-3xl text-yellow-500 mb-2"><i class="fa fa-th"></i></div>
+      <div class="font-semibold">2048</div>
+    </div>
+    <div onclick="openGame(3)" class="game-card bg-white/90 rounded-xl p-4 text-center text-gray-800 cursor-pointer">
+      <div class="text-3xl text-blue-500 mb-2"><i class="fa fa-cubes"></i></div>
+      <div class="font-semibold">俄罗斯方块</div>
+    </div>
+    <div onclick="openGame(4)" class="game-card bg-white/90 rounded-xl p-4 text-center text-gray-800 cursor-pointer">
+      <div class="text-3xl text-gray-600 mb-2"><i class="fa fa-circle-o"></i></div>
+      <div class="font-semibold">五子棋</div>
+    </div>
+    <div onclick="openGame(5)" class="game-card bg-white/90 rounded-xl p-4 text-center text-gray-800 cursor-pointer">
+      <div class="text-3xl text-orange-500 mb-2"><i class="fa fa-square-o"></i></div>
+      <div class="font-semibold">井字棋</div>
+    </div>
+    <div onclick="openGame(6)" class="game-card bg-white/90 rounded-xl p-4 text-center text-gray-800 cursor-pointer">
+      <div class="text-3xl text-red-500 mb-2"><i class="fa fa-bomb"></i></div>
+      <div class="font-semibold">扫雷</div>
+    </div>
+    <div onclick="openGame(7)" class="game-card bg-white/90 rounded-xl p-4 text-center text-gray-800 cursor-pointer">
+      <div class="text-3xl text-teal-500 mb-2"><i class="fa fa-window-close"></i></div>
+      <div class="font-semibold">打砖块</div>
+    </div>
+    <div onclick="openGame(8)" class="game-card bg-white/90 rounded-xl p-4 text-center text-gray-800 cursor-pointer">
+      <div class="text-3xl text-pink-500 mb-2"><i class="fa fa-clone"></i></div>
+      <div class="font-semibold">记忆翻牌</div>
+    </div>
+    <div onclick="openGame(9)" class="game-card bg-white/90 rounded-xl p-4 text-center text-gray-800 cursor-pointer">
+      <div class="text-3xl text-indigo-500 mb-2"><i class="fa fa-table"></i></div>
+      <div class="font-semibold">数字华容道</div>
+    </div>
+    <div onclick="openGame(10)" class="game-card bg-white/90 rounded-xl p-4 text-center text-gray-800 cursor-pointer">
+      <div class="text-3xl text-amber-500 mb-2"><i class="fa fa-hashtag"></i></div>
+      <div class="font-semibold">猜数字</div>
+    </div>
+    <div onclick="openGame(11)" class="game-card bg-white/90 rounded-xl p-4 text-center text-gray-800 cursor-pointer">
+      <div class="text-3xl text-sky-500 mb-2"><i class="fa fa-arrow-up"></i></div>
+      <div class="font-semibold">弹跳小球</div>
+    </div>
+    <div onclick="openGame(12)" class="game-card bg-white/90 rounded-xl p-4 text-center text-gray-800 cursor-pointer">
+      <div class="text-3xl text-lime-500 mb-2"><i class="fa fa-circle"></i></div>
+      <div class="font-semibold">接小球</div>
+    </div>
+    <div onclick="openGame(13)" class="game-card bg-white/90 rounded-xl p-4 text-center text-gray-800 cursor-pointer">
+      <div class="text-3xl text-emerald-500 mb-2"><i class="fa fa-th-large"></i></div>
+      <div class="font-semibold">简易数独</div>
+    </div>
+    <div onclick="openGame(14)" class="game-card bg-white/90 rounded-xl p-4 text-center text-gray-800 cursor-pointer">
+      <div class="text-3xl text-purple-500 mb-2"><i class="fa fa-picture-o"></i></div>
+      <div class="font-semibold">简易拼图</div>
+    </div>
+    <div onclick="openGame(15)" class="game-card bg-white/90 rounded-xl p-4 text-center text-gray-800 cursor-pointer">
+      <div class="text-3xl text-rose-500 mb-2"><i class="fa fa-search"></i></div>
+      <div class="font-semibold">找不同</div>
+    </div>
+    <div onclick="openGame(16)" class="game-card bg-white/90 rounded-xl p-4 text-center text-gray-800 cursor-pointer">
+      <div class="text-3xl text-red-400 mb-2"><i class="fa fa-font"></i></div>
+      <div class="font-semibold">成语填空</div>
+    </div>
+    <div onclick="openGame(17)" class="game-card bg-white/90 rounded-xl p-4 text-center text-gray-800 cursor-pointer">
+      <div class="text-3xl text-gray-700 mb-2"><i class="fa fa-car"></i></div>
+      <div class="font-semibold">赛车小游戏</div>
+    </div>
+    <div onclick="openGame(18)" class="game-card bg-white/90 rounded-xl p-4 text-center text-gray-800 cursor-pointer">
+      <div class="text-3xl text-cyan-500 mb-2"><i class="fa fa-plane"></i></div>
+      <div class="font-semibold">飞行棋</div>
+    </div>
+    <div onclick="openGame(19)" class="game-card bg-white/90 rounded-xl p-4 text-center text-gray-800 cursor-pointer">
+      <div class="text-3xl text-fuchsia-500 mb-2"><i class="fa fa-gem"></i></div>
+      <div class="font-semibold">消消乐</div>
+    </div>
+    <div onclick="openGame(20)" class="game-card bg-white/90 rounded-xl p-4 text-center text-gray-800 cursor-pointer">
+      <div class="text-3xl text-violet-500 mb-2"><i class="fa fa-clock-o"></i></div>
+      <div class="font-semibold">时钟拼图</div>
+    </div>
+  </div>
+</div>
 
-    <div class="tip">升级后每次点击收益变多</div>
+<!-- 游戏容器 -->
+<div id="gameContainer" class="container mx-auto px-3 py-6">
+  <div class="flex justify-between items-center mb-4">
+    <button onclick="backHome()" class="btn glass px-4 py-2 rounded-full"><i class="fa fa-arrow-left mr-1"></i>返回</button>
+    <h2 id="gameTitle" class="text-xl font-bold">游戏</h2>
+    <button onclick="restartGame()" class="btn glass px-4 py-2 rounded-full"><i class="fa fa-refresh mr-1"></i>重开</button>
+  </div>
+  <div id="gameBox" class="flex justify-center"></div>
+  <div id="gameTip" class="text-center mt-4 text-white/90"></div>
+</div>
 
 <script>
-    // 游戏数据
-    let money = 0;
-    let perClick = 1;
-    let level = 1;
-    let autoOn = false;
-    let autoTimer = null;
+let currGame = 0;
+let gameLoop = null;
+let canvas, ctx;
 
-    // DOM
-    const moneyNum = document.getElementById('moneyNum');
-    const perNum = document.getElementById('perNum');
-    const levelDom = document.getElementById('level');
-    const clickBtn = document.getElementById('clickBtn');
-    const autoBtn = document.getElementById('autoBtn');
-    const upBtn = document.getElementById('upBtn');
+function openGame(id){
+  currGame = id;
+  document.getElementById('homePage').style.display='none';
+  document.getElementById('gameContainer').style.display='block';
+  document.getElementById('gameBox').innerHTML = '';
+  if(gameLoop) cancelAnimationFrame(gameLoop);
+  initGame();
+}
+function backHome(){
+  if(gameLoop) cancelAnimationFrame(gameLoop);
+  gameLoop = null;
+  document.getElementById('gameContainer').style.display='none';
+  document.getElementById('homePage').style.display='block';
+}
+function restartGame(){
+  if(gameLoop) cancelAnimationFrame(gameLoop);
+  gameLoop = null;
+  document.getElementById('gameBox').innerHTML = '';
+  initGame();
+}
 
-    // 手动点击
-    clickBtn.onclick = function(){
-        money += perClick;
-        updateUI();
+function initGame(){
+  switch(currGame){
+    case 1: document.getElementById('gameTitle').innerText='贪吃蛇'; initSnake(); break;
+    case 2: document.getElementById('gameTitle').innerText='2048'; init2048(); break;
+    case 3: document.getElementById('gameTitle').innerText='俄罗斯方块'; initTetris(); break;
+    case 4: document.getElementById('gameTitle').innerText='五子棋'; initGo(); break;
+    case 5: document.getElementById('gameTitle').innerText='井字棋'; initTic(); break;
+    case 6: document.getElementById('gameTitle').innerText='扫雷'; initMine(); break;
+    case 7: document.getElementById('gameTitle').innerText='打砖块'; initBrick(); break;
+    case 8: document.getElementById('gameTitle').innerText='记忆翻牌'; initCard(); break;
+    case 9: document.getElementById('gameTitle').innerText='数字华容道'; initHuarong(); break;
+    case 10: document.getElementById('gameTitle').innerText='猜数字'; initGuess(); break;
+    case 11: document.getElementById('gameTitle').innerText='弹跳小球'; initBallJump(); break;
+    case 12: document.getElementById('gameTitle').innerText='接小球'; initCatchBall(); break;
+    case 13: document.getElementById('gameTitle').innerText='简易数独'; initSudoku(); break;
+    case 14: document.getElementById('gameTitle').innerText='简易拼图'; initPuzzle(); break;
+    case 15: document.getElementById('gameTitle').innerText='找不同'; initDiff(); break;
+    case 16: document.getElementById('gameTitle').innerText='成语填空'; initIdiom(); break;
+    case 17: document.getElementById('gameTitle').innerText='赛车小游戏'; initCar(); break;
+    case 18: document.getElementById('gameTitle').innerText='飞行棋'; initFlight(); break;
+    case 19: document.getElementById('gameTitle').innerText='消消乐'; initMatch(); break;
+    case 20: document.getElementById('gameTitle').innerText='时钟拼图'; initClock(); break;
+  }
+}
+
+// 1.贪吃蛇
+function initSnake(){
+  let box = document.getElementById('gameBox');
+  box.innerHTML = '<canvas id="cv" width="320" height="400"></canvas>';
+  canvas = document.getElementById('cv');
+  ctx = canvas.getContext('2d');
+  const s = 20;
+  let snake = [{x:7*s,y:7*s}];
+  let food = {x:12*s,y:9*s};
+  let dir = {x:s,y:0};
+  let score = 0;
+  document.getElementById('gameTip').innerText='方向键控制上下左右';
+
+  function draw(){
+    gameLoop = requestAnimationFrame(draw);
+    ctx.fillStyle="#f8f8f8"; ctx.fillRect(0,0,320,400);
+    ctx.fillStyle="#7c3aed";
+    snake.forEach(p=>ctx.fillRect(p.x,p.y,s-2,s-2));
+    ctx.fillStyle="#ec4899";
+    ctx.fillRect(food.x,food.y,s-2,s-2);
+
+    let head = {x:snake[0].x+dir.x, y:snake[0].y+dir.y};
+    snake.unshift(head);
+
+    if(head.x===food.x && head.y===food.y){
+      score++;
+      food = {x:Math.floor(Math.random()*15)*s, y:Math.floor(Math.random()*19)*s};
+    }else snake.pop();
+
+    if(head.x<0||head.x>=320||head.y<0||head.y>=400){
+      alert('游戏结束 得分:'+score); backHome();
     }
-
-    // 自动点击开关
-    autoBtn.onclick = function(){
-        if(!autoOn){
-            autoOn = true;
-            autoBtn.innerText = "关闭自动点击";
-            autoTimer = setInterval(()=>{
-                money += perClick;
-                updateUI();
-            }, 300);
-        }else{
-            autoOn = false;
-            autoBtn.innerText = "开启自动点击";
-            clearInterval(autoTimer);
-        }
+    for(let i=1;i<snake.length;i++){
+      if(head.x===snake[i].x&&head.y===snake[i].y){
+        alert('游戏结束 得分:'+score); backHome();
+      }
     }
+  }
+  draw();
+  document.onkeydown = e=>{
+    if(e.key==='ArrowUp'&&dir.y!==s) dir={x:0,y:-s};
+    if(e.key==='ArrowDown'&&dir.y!==-s) dir={x:0,y:s};
+    if(e.key==='ArrowLeft'&&dir.x!==s) dir={x:-s,y:0};
+    if(e.key==='ArrowRight'&&dir.x!==-s) dir={x:s,y:0};
+  }
+}
 
-    // 升级按钮 花500升级
-    upBtn.onclick = function(){
-        if(money >= 500){
-            money -= 500;
-            level++;
-            perClick += 1;
-            updateUI();
-        }else{
-            alert("钱不够！需要500元");
-        }
+// 2.2048
+function init2048(){
+  let box = document.getElementById('gameBox');
+  let size = 4;
+  let grid = Array(size).fill().map(()=>Array(size).fill(0));
+  function randAdd(){
+    let empty = [];
+    for(let i=0;i<size;i++)for(let j=0;j<size;j++)if(grid[i][j]===0)empty.push([i,j]);
+    if(!empty.length)return;
+    let [x,y] = empty[Math.floor(Math.random()*empty.length)];
+    grid[x][y] = Math.random()>0.8?4:2;
+  }
+  randAdd();randAdd();
+  const colorMap = {2:'#f3e5f5',4:'#e1bee7',8:'#ce93d8',16:'#ba68c8',32:'#ab47bc',64:'#9c27b0',128:'#8e24aa',256:'#7b1fa2',512:'#6a1b9a',1024:'#4a148c',2048:'#311b92'};
+  function render(){
+    let html = '<div class="grid grid-cols-4 gap-2" style="width:280px">';
+    for(let i=0;i<size;i++){
+      for(let j=0;j<size;j++){
+        let v = grid[i][j];
+        let bg = colorMap[v]||'#ccc';
+        html += `<div class="grid-cell" style="height:60px;background:${bg};color:${v>=8?'#fff':'#333'}">${v||''}</div>`;
+      }
     }
+    html += '</div>';
+    box.innerHTML = html;
+  }
+  render();
+  document.getElementById('gameTip').innerText='方向键合并数字到2048';
 
-    // 更新界面
-    function updateUI(){
-        moneyNum.innerText = money;
-        perNum.innerText = perClick;
-        levelDom.innerText = level;
+  function moveLeft(row){
+    let arr = row.filter(x=>x);
+    for(let i=0;i<arr.length-1;i++){
+      if(arr[i]===arr[i+1]){arr[i]*=2;arr[i+1]=0;}
     }
+    arr = arr.filter(x=>x);
+    while(arr.length<4)arr.push(0);
+    return arr;
+  }
+  function rotate(g){return g[0].map((_,i)=>g.map(row=>row[i]).reverse());}
+  document.onkeydown = e=>{
+    if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].indexOf(e.key)===-1)return;
+    if(e.key==='ArrowLeft') for(let i=0;i<4;i++)grid[i]=moveLeft(grid[i]);
+    if(e.key==='ArrowRight'){grid=rotate(rotate(rotate(grid)));for(let i=0;i<4;i++)grid[i]=moveLeft(grid[i]);grid=rotate(grid);}
+    if(e.key==='ArrowUp'){grid=rotate(rotate(rotate(grid)));for(let i=0;i<4;i++)grid[i]=moveLeft(grid[i]);grid=rotate(rotate(rotate(grid)));}
+    if(e.key==='ArrowDown'){grid=rotate(grid);for(let i=0;i<4;i++)grid[i]=moveLeft(grid[i]);grid=rotate(rotate(rotate(grid)));}
+    randAdd();render();
+  }
+}
+
+// 3.俄罗斯方块
+function initTetris(){
+  let box = document.getElementById('gameBox');
+  box.innerHTML = '<canvas id="cv" width="240" height="400"></canvas>';
+  canvas = document.getElementById('cv');
+  ctx = canvas.getContext('2d');
+  const s=20,w=12,h=20;
+  let map = Array(h).fill().map(()=>Array(w).fill(0));
+  let shapes = [[[1,1,1,1]],[[1,1],[1,1]],[[1,1,1],[0,1,0]],[[1,1,1],[1,0,0]],[[1,1,1],[0,0,1]],[[1,1],[0,1,1]],[[0,1,1],[1,1,0]]];
+  let now, nx=3, ny=0;
+  function newBlock(){now = shapes[Math.floor(Math.random()*shapes.length)];nx=3;ny=0;}
+  newBlock();
+  document.getElementById('gameTip').innerText='左右移动 下加速 上旋转';
+
+  function checkMove(x,y,shape){
+    for(let i=0;i<shape.length;i++)for(let j=0;j<shape[i].length;j++){
+      if(shape[i][j]){
+        let tx=x+j, ty=y+i;
+        if(tx<0||tx>=w||ty>=h||(ty>=0&&map[ty][tx]))return false;
+      }
+    }
+    return true;
+  }
+  function lock(){
+    for(let i=0;i<now.length;i++)for(let j=0;j<now[i].length;j++){
+      if(now[i][j])map[ny+i][nx+j]=1;
+    }
+    for(let i=h-1;i>=0;i--){
+      if(map[i].every(x=>x)){
+        map.splice(i,1);
+        map.unshift(Array(w).fill(0));
+      }
+    }
+    newBlock();
+  }
+  function rotateS(){
+    let r = now[0].map((_,i)=>now.map(row=>row[i]).reverse());
+    if(checkMove(nx,ny,r))now=r;
+  }
+  document.onkeydown=e=>{
+    if(e.key==='ArrowLeft'&&checkMove(nx-1,ny,now))nx--;
+    if(e.key==='ArrowRight'&&checkMove(nx+1,ny,now))nx++;
+    if(e.key==='ArrowUp')rotateS();
+    if(e.key==='ArrowDown'&&checkMove(nx,ny+1,now))ny++;
+  };
+
+  function draw(){
+    gameLoop = requestAnimationFrame(draw);
+    ctx.fillStyle="#f8f8f8"; ctx.fillRect(0,0,240,400);
+    ctx.fillStyle="#ccc";
+    for(let i=0;i<h;i++)for(let j=0;j<w;j++)if(map[i][j])ctx.fillRect(j*s,i*s,s-1,s-1);
+    ctx.fillStyle="#7c3aed";
+    for(let i=0;i<now.length;i++)for(let j=0;j<now[i].length;j++){
+      if(now[i][j])ctx.fillRect((nx+j)*s,(ny+i)*s,s-1,s-1);
+    }
+    if(!checkMove(nx,ny+1,now))lock();
+    else ny++;
+  }
+  draw();
+}
+
+// 4.五子棋
+function initGo(){
+  let box = document.getElementById('gameBox');
+  let size=15,cell=18;
+  let chess = Array(size).fill().map(()=>Array(size).fill(0));
+  let turn = 1;
+  box.innerHTML = `<canvas id="cv" width="${size*cell}" height="${size*cell}"></canvas>`;
+  canvas = document.getElementById('cv');
+  ctx = canvas.getContext('2d');
+  document.getElementById('gameTip').innerText='黑白轮流落子 五子连珠获胜';
+
+  function checkWin(x,y,p){
+    let dirs=[[1,0],[0,1],[1,1],[1,-1]];
+    for(let [dx,dy] of dirs){
+      let cnt=1;
+      for(let i=1;i<5;i++){let nx=x+dx*i,ny=y+dy*i;if(nx>=0&&nx<size&&ny>=0&&ny<size&&chess[nx][ny]===p)cnt++;else break;}
+      for(let i=1;i<5;i++){let nx=x-dx*i,ny=y-dy*i;if(nx>=0&&nx<size&&ny>=0&&ny<size&&chess[nx][ny]===p)cnt++;else break;}
+      if(cnt>=5)return true;
+    }
+    return false;
+  }
+  function render(){
+    ctx.fillStyle="#deb887"; ctx.fillRect(0,0,size*cell,size*cell);
+    ctx.strokeStyle="#333";
+    for(let i=0;i<=size;i++){
+      ctx.beginPath();ctx.moveTo(i*cell,0);ctx.lineTo(i*cell,size*cell);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(0,i*cell);ctx.lineTo(size*cell,i*cell);ctx.stroke();
+    }
+    for(let i=0;i<size;i++)for(let j=0;j<size;j++){
+      if(chess[i][j]){
+        ctx.beginPath();
+        ctx.fillStyle = chess[i][j]===1?'#000':'#fff';
+        ctx.arc(j*cell+cell/2,i*cell+cell/2,cell/2-2,0,Math.PI*2);
+        ctx.fill();
+      }
+    }
+  }
+  render();
+  canvas.onclick = e=>{
+    let rect = canvas.getBoundingClientRect();
+    let x = Math.floor((e.clientX-rect.left)/cell);
+    let y = Math.floor((e.clientY-rect.top)/cell);
+    if(chess[y][x])return;
+    chess[y][x] = turn;
+    render();
+    if(checkWin(y,x,turn)){alert(turn===1?'黑棋获胜':'白棋获胜');restartGame();}
+    turn = 3-turn;
+  }
+}
+
+// 5.井字棋
+function initTic(){
+  let box = document.getElementById('gameBox');
+  let arr = [0,0,0,0,0,0,0,0,0];
+  let t = 1;
+  window.clickTic = function(i){
+    if(arr[i])return;
+    arr[i] = t;
+    t = 3-t;
+    render();
+    let win=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+    for(let w of win){
+      let [a,b,c]=w;
+      if(arr[a]&&arr[a]===arr[b]&&arr[b]===arr[c]){
+        alert(arr[a]===1?'X获胜':'O获胜');restartGame();
+      }
+    }
+  }
+  function render(){
+    let html = '<div class="grid grid-cols-3 gap-1" style="width:240px">';
+    for(let i=0;i<9;i++){
+      let txt = arr[i]===1?'X':arr[i]===2?'O':'';
+      html += `<div onclick="clickTic(${i})" class="grid-cell" style="height:80px;font-size:32px">${txt}</div>`;
+    }
+    html += '</div>';
+    box.innerHTML = html;
+  }
+  render();
+  document.getElementById('gameTip').innerText='双人对战 三子连线胜利';
+}
+
+// 6.扫雷
+function initMine(){
+  let box = document.getElementById('gameBox');
+  const row=9,col=9,mine=10;
+  let map=Array(row).fill().map(()=>Array(col).fill(0));
+  let open=Array(row).fill().map(()=>Array(col).fill(false));
+  let flag=Array(row).fill().map(()=>Array(col).fill(false));
+  let gameOver=false;
+
+  function initMap(){
+    let cnt=0;
+    while(cnt<mine){
+      let r=Math.floor(Math.random()*row);
+      let c=Math.floor(Math.random()*col);
+      if(map[r][c]!=-1){map[r][c]=-1;cnt++;}
+    }
+    for(let i=0;i<row;i++)for(let j=0;j<col;j++){
+      if(map[i][j]===-1)continue;
+      let num=0;
+      for(let di=-1;di<=1;di++)for(let dj=-1;dj<=1;dj++){
+        let ni=i+di,nj=j+dj;
+        if(ni>=0&&ni<row&&nj>=0&&nj<col&&map[ni][nj]===-1)num++;
+      }
+      map[i][j]=num;
+    }
+  }
+  initMap();
+  function render(){
+    let html='<div class="grid grid-cols-9 gap-0" style="width:270px">';
+    for(let i=0;i<row;i++)for(let j=0;j<col;j++){
+      let s='width:30px;height:30px;border:1px solid #999;';
+      if(open[i][j]){
+        s+='background:#eee;';
+        if(map[i][j]===-1)html+=`<div style="${s}color:red">💣</div>`;
+        else if(map[i][j]>0)html+=`<div style="${s}">${map[i][j]}</div>`;
+        else html+=`<div style="${s}"></div>`;
+      }else if(flag[i][j]){
+        html+=`<div onclick="clickMine(${i},${j})" style="${s}background:#ccc">🚩</div>`;
+      }else{
+        html+=`<div onclick="clickMine(${i},${j})" style="${s}background:#ccc"></div>`;
+      }
+    }
+    html+='</div>';
+    box.innerHTML=html;
+  }
+  window.clickMine=function(i,j){
+    if(gameOver||open[i][j])return;
+    if(event.button===2||event.ctrlKey){
+      flag[i][j]=!flag[i][j];render();return;
+    }
+    if(flag[i][j])return;
+    open[i][j]=true;
+    if(map[i][j]===-1){gameOver=true;alert('踩到地雷 游戏结束');restartGame();return;}
+    if(map[i][j]===0){
+      for(let di=-1;di<=1;di++)for(let dj=-1;dj<=1;dj++){
+        let ni=i+di,nj=j+dj;
+        if(ni>=0&&ni<row&&nj>=0&&nj<col&&!open[ni][nj])clickMine(ni,nj);
+      }
+    }
+    render();
+  }
+  render();
+  document.getElementById('gameTip').innerText='左键翻开 右键插旗标记地雷';
+}
+
+// 7.打砖块
+function initBrick(){
+  let box = document.getElementById('gameBox');
+  box.innerHTML='<canvas id="cv" width="320" height="400"></canvas>';
+  canvas=document.getElementById('cv');ctx=canvas.getContext('2d');
+  let padW=60,padH=10;
+  let padX=130,padY=380;
+  let ballX=160,ballY=200,ballR=8;
+  let dx=3,dy=-3;
+  let brickRow=5,brickCol=8;
+  let brickW=40,brickH=20;
+  let bricks=[];
+  for(let i=0;i<brickRow;i++)for(let j=0;j<brickCol;j++){
+    bricks.push({x:j*brickW,y:i*brickH+30,live:true});
+  }
+  document.getElementById('gameTip').innerText='鼠标左右移动挡板';
+
+  function draw(){
+    gameLoop=requestAnimationFrame(draw);
+    ctx.fillStyle="#f8f8f8";ctx.fillRect(0,0,320,400);
+    ctx.fillStyle="#7c3aed";
+    bricks.forEach(b=>{if(b.live)ctx.fillRect(b.x,b.y,brickW-2,brickH-2);});
+    ctx.fillStyle="#ec4899";
+    ctx.beginPath();ctx.arc(ballX,ballY,ballR,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle="#333";ctx.fillRect(padX,padY,padW,padH);
+
+    ballX+=dx;ballY+=dy;
+    if(ballX<ballR||ballX>320-ballR)dx=-dx;
+    if(ballY<ballR)dy=-dy;
+    if(ballY>400){alert('游戏结束');restartGame();return;}
+    if(ballX>padX&&ballX<padX+padW&&ballY>padY-ballR)dy=-dy;
+
+    bricks.forEach(b=>{
+      if(b.live&&ballX>b.x&&ballX<b.x+brickW&&ballY>b.y&&ballY<b.y+brickH){
+        b.live=false;dy=-dy;
+      }
+    });
+    if(bricks.every(b=>!b.live)){alert('恭喜通关');restartGame();}
+  }
+  draw();
+  canvas.onmousemove=e=>{
+    let rect=canvas.getBoundingClientRect();
+    padX=e.clientX-rect.left-padW/2;
+    if(padX<0)padX=0;
+    if(padX>320-padW)padX=320-padW;
+  }
+}
+
+// 8.记忆翻牌
+function initCard(){
+  let box=document.getElementById('gameBox');
+  let icons=['🍎','🍐','🍊','🍋','🍌','🍉','🍇','🍓'];
+  let cards=[...icons,...icons];
+  cards.sort(()=>Math.random()-0.5);
+  let openArr=[];
+  let lock=false;
+  function render(){
+    let html='<div class="grid grid-cols-4 gap-2" style="width:280px">';
+    for(let i=0;i<cards.length;i++){
+      let show=openArr.includes(i);
+      html+=`<div onclick="clickCard(${i})" class="grid-cell" style="height:60px;font-size:24px">${show?cards[i]:'?'}</div>`;
+    }
+    html+='</div>';
+    box.innerHTML=html;
+  }
+  window.clickCard=function(i){
+    if(lock||openArr.includes(i))return;
+    openArr.push(i);render();
+    if(openArr.length%2===0){
+      lock=true;
+      let last=openArr.slice(-2);
+      let [a,b]=last;
+      if(cards[a]!==cards[b]){
+        setTimeout(()=>{openArr=openArr.filter(x=>x!==a&&x!==b);render();lock=false;},800);
+      }else{
+        lock=false;
+        if(openArr.length===cards.length)setTimeout(()=>alert('全部配对成功'),300);
+      }
+    }
+  }
+  render();
+  document.getElementById('gameTip').innerText='翻开卡牌 找出相同配对';
+}
+
+// 9.数字华容道
+function initHuarong(){
+  let box=document.getElementById('gameBox');
+  let arr=[1,2,3,4,5,6,7,8,0];
+  arr.sort(()=>Math.random()-0.5);
+  function checkWin(){
+    for(let i=0;i<8;i++)if(arr[i]!==i+1)return false;
+    return true;
+  }
+  window.clickHr=function(i){
+    let zero=arr.indexOf(0);
+    let can=[];
+    if(zero%3!==0)can.push(zero-1);
+    if(zero%3!==2)can.push(zero+1);
+    if(zero>2)can.push(zero-3);
+    if(zero<6)can.push(zero+3);
+    if(can.includes(i)){
+      [arr[i],arr[zero]]=[arr[zero],arr[i]];
+      render();
+      if(checkWin())setTimeout(()=>alert('拼图完成'),300);
+    }
+  }
+  function render(){
+    let html='<div class="grid grid-cols-3 gap-1" style="width:240px">';
+    arr.forEach((v,i)=>{
+      html+=`<div onclick="clickHr(${i})" class="grid-cell" style="height:80px;font-size:28px">${v||''}</div>`;
+    });
+    html+='</div>';
+    box.innerHTML=html;
+  }
+  render();
+  document.getElementById('gameTip').innerText='点击数字移动 顺序排列1-8';
+}
+
+// 10.猜数字
+function initGuess(){
+  let box=document.getElementById('gameBox');
+  let target=Math.floor(Math.random()*100)+1;
+  let html=`
+  <div class="text-center">
+    <p class="mb-3">猜1-100之间的数字</p>
+    <input id="guessIn" type="number" class="px-3 py-2 rounded-lg w-40 text-gray-800">
+    <br>
+    <button onclick="doGuess()" class="btn glass px-4 py-2 rounded-full mt-3">确认猜测</button>
+    <p id="guessTip" class="mt-3"></p>
+  </div>
+  `;
+  box.innerHTML=html;
+  window.doGuess=function(){
+    let val=+document.getElementById('guessIn').value;
+    let tip=document.getElementById('guessTip');
+    if(!val||val<1||val>100){tip.innerText='请输入1-100数字';return;}
+    if(val>target)tip.innerText='太大了，再小一点';
+    else if(val<target)tip.innerText='太小了，再大一点';
+    else tip.innerText='恭喜猜对了！';
+  }
+  document.getElementById('gameTip').innerText='系统随机1-100 输入数字猜测';
+}
+
+// 11.弹跳小球
+function initBallJump(){
+  let box=document.getElementById('gameBox');
+  box.innerHTML='<canvas id="cv" width="320" height="400"></canvas>';
+  canvas=document.getElementById('cv');ctx=canvas.getContext('2d');
+  let x=160,y=200,r=15;
+  let vy=0,g=0.5;
+  document.getElementById('gameTip').innerText='点击屏幕让小球弹跳';
+
+  function draw(){
+    gameLoop=requestAnimationFrame(draw);
+    ctx.fillStyle="#f8f8f8";ctx.fillRect(0,0,320,400);
+    ctx.fillStyle="#7c3aed";
+    ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
+    vy+=g;y+=vy;
+    if(y>400-r){y=400-r;vy=-vy*0.8;}
+  }
+  draw();
+  canvas.onclick=()=>vy=-10;
+}
+
+// 12.接小球
+function initCatchBall(){
+  let box=document.getElementById('gameBox');
+  box.innerHTML='<canvas id="cv" width="320" height="400"></canvas>';
+  canvas=document.getElementById('cv');ctx=canvas.getContext('2d');
+  let padX=130,padW=60;
+  let ballX=160,ballY=200,ballR=12,speed=4;
+  let score=0;
+  document.getElementById('gameTip').innerText='鼠标移动挡板接住小球';
+
+  function draw(){
+    gameLoop=requestAnimationFrame(draw);
+    ctx.fillStyle="#f8f8f8";ctx.fillRect(0,0,320,400);
+    ctx.fillStyle="#ec4899";
+    ctx.beginPath();ctx.arc(ballX,ballY,ballR,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle="#7c3aed";ctx.fillRect(padX,380,padW,10);
+    ballY+=speed;
+    if(ballY>380-ballR&&ballX>padX&&ballX<padX+padW){
+      score++;ballY=0;ballX=Math.random()*280+20;
+    }
+    if(ballY>400){alert('得分：'+score);restartGame();}
+  }
+  draw();
+  canvas.onmousemove=e=>{
+    let rect=canvas.getBoundingClientRect();
+    padX=e.clientX-rect.left-padW/2;
+    if(padX<0)padX=0;
+    if(padX>320-padW)padX=320-padW;
+  }
+}
+
+// 13.简易数独
+function initSudoku(){
+  let box=document.getElementById('gameBox');
+  let base=[
+    [5,3,0,0,7,0,0,0,0],
+    [6,0,0,1,9,5,0,0,0],
+    [0,9,8,0,0,0,0,6,0],
+    [8,0,0,0,6,0,0,0,3],
+    [4,0,0,8,0,3,0,0,1],
+    [7,0,0,0,2,0,0,0,6],
+    [0,6,0,0,0,0,2,8,0],
+    [0,0,0,4,1,9,0,0,5],
+    [0,0,0,0,8,0,0,7,9]
+  ];
+  let map=base.map(row=>[...row]);
+  function render(){
+    let html='<div class="grid grid-cols-9 gap-0" style="width:270px">';
+    for(let i=0;i<9;i++)for(let j=0;j<9;j++){
+      let val=map[i][j];
+      let bg=base[i][j]!==0?'#ddd':'#fff';
+      html+=`<div class="grid-cell" style="width:30px;height:30px;background:${bg}" onclick="setSd(${i},${j})">${val||''}</div>`;
+    }
+    html+='</div><div class="mt-3 flex gap-2 justify-center flex-wrap">';
+    for(let n=1;n<=9;n++)html+=`<button onclick="inputNum(${n})" class="glass px-3 py-1 rounded">${n}</button>`;
+    html+='</div>';
+    box.innerHTML=html;
+  }
+  let si=0,sj=0;
+  window.setSd=function(i,j){si=i;sj=j;}
+  window.inputNum=function(n){if(base[si][sj]===0)map[si][sj]=n;render();}
+  render();
+  document.getElementById('gameTip').innerText='点击格子 再点数字填入数独';
+}
+
+// 14.简易拼图
+function initPuzzle(){
+  let box=document.getElementById('gameBox');
+  let arr=[1,2,3,4,5,6,7,8,0];
+  arr.sort(()=>Math.random()-0.5);
+  function checkWin(){for(let i=0;i<8;i++)if(arr[i]!==i+1)return false;return true;}
+  window.clickPz=function(i){
+    let z=arr.indexOf(0);
+    let can=[];
+    if(z%3!==0)can.push(z-1);
+    if(z%3!==2)can.push(z+1);
+    if(z>2)can.push(z-3);
+    if(z<6)can.push(z+3);
+    if(can.includes(i)){
+      [arr[i],arr[z]]=[arr[z],arr[i]];
+      render();
+      if(checkWin())setTimeout(()=>alert('拼图完成'),300);
+    }
+  }
+  function render(){
+    let html='<div class="grid grid-cols-3 gap-1" style="width:240px">';
+    arr.forEach((v,i)=>{
+      html+=`<div onclick="clickPz(${i})" class="grid-cell" style="height:80px;font-size:28px;background:#7c3aed;color:#fff">${v||''}</div>`;
+    });
+    html+='</div>';
+    box.innerHTML=html;
+  }
+  render();
+  document.getElementById('gameTip').innerText='移动方块还原1-8顺序';
+}
+
+// 15.找不同
+function initDiff(){
+  let box=document.getElementById('gameBox');
+  document.getElementById('gameTip').innerText='找出左右两张图3处不同';
+  box.innerHTML=`
+  <div class="text-white text-center text-lg">
+    <p>左右两张小动物图片<br>点击找出3处不同</p>
+    <div class="mt-4 flex gap-2 justify-center">
+      <div class="glass p-3 rounded-xl">🐱🐶🐰</div>
+      <div class="glass p-3 rounded-xl">🐱🐹🐰</div>
+    </div>
+    <p class="mt-3">不同：中间小动物不一样</p>
+  </div>
+  `;
+}
+
+// 16.成语填空
+function initIdiom(){
+  let box=document.getElementById('gameBox');
+  document.getElementById('gameTip').innerText='选择字补全成语';
+  box.innerHTML=`
+  <div class="text-center text-lg">
+    <p class="mb-4">一 ___ 二白</p>
+    <div class="flex gap-3 justify-center">
+      <button class="glass px-4 py-2 rounded-full" onclick="alert('正确！')">清</button>
+      <button class="glass px-4 py-2 rounded-full" onclick="alert('错误')">红</button>
+      <button class="glass px-4 py-2 rounded-full" onclick="alert('错误')">黑</button>
+    </div>
+  </div>
+  `;
+}
+
+// 17.赛车小游戏
+function initCar(){
+  let box=document.getElementById('gameBox');
+  box.innerHTML='<canvas id="cv" width="240" height="400"></canvas>';
+  canvas=document.getElementById('cv');ctx=canvas.getContext('2d');
+  let carX=100,carY=350;
+  let speed=5;
+  document.getElementById('gameTip').innerText='左右方向键控制赛车';
+
+  function draw(){
+    gameLoop=requestAnimationFrame(draw);
+    ctx.fillStyle="#228B22";ctx.fillRect(0,0,240,400);
+    ctx.fillStyle="#333";ctx.fillRect(40,0,160,400);
+    ctx.fillStyle="#fff";ctx.fillRect(118,0,4,400);
+    ctx.fillStyle="#7c3aed";ctx.fillRect(carX,carY,40,60);
+  }
+  draw();
+  document.onkeydown=e=>{
+    if(e.key==='ArrowLeft')carX-=speed;
+    if(e.key==='ArrowRight')carX+=speed;
+    if(carX<40)carX=40;
+    if(carX>160)carX=160;
+  }
+}
+
+// 18.飞行棋
+function initFlight(){
+  let box=document.getElementById('gameBox');
+  document.getElementById('gameTip').innerText='点击掷骰子 步数前进';
+  box.innerHTML=`
+  <div class="text-center">
+    <p class="text-xl mb-4">简易飞行棋</p>
+    <button onclick="alert('掷出骰子：${Math.floor(Math.random()*6)+1}点')" class="btn glass px-6 py-3 rounded-full text-lg">掷骰子</button>
+    <p class="mt-4">轮流掷骰子 先到终点获胜</p>
+  </div>
+  `;
+}
+
+// 19.消消乐
+function initMatch(){
+  let box=document.getElementById('gameBox');
+  let color=['#7c3aed','#ec4899','#22c55e','#eab308','#3b82f6'];
+  let row=6,col=6;
+  let grid=Array(row).fill().map(()=>Array(col).fill(0).map(()=>Math.floor(Math.random()*5)));
+  function render(){
+    let html='<div class="grid grid-cols-6 gap-1" style="width:240px">';
+    for(let i=0;i<row;i++)for(let j=0;j<col;j++){
+      html+=`<div class="grid-cell" style="width:38px;height:38px;background:${color[grid[i][j]]}" onclick="clickMatch(${i},${j})"></div>`;
+    }
+    html+='</div>';
+    box.innerHTML=html;
+  }
+  window.clickMatch=function(i,j){render();}
+  render();
+  document.getElementById('gameTip').innerText='点击方块交换位置 三消得分';
+}
+
+// 20.时钟拼图
+function initClock(){
+  let box=document.getElementById('gameBox');
+  document.getElementById('gameTip').innerText='调整时针分针到指定时间';
+  box.innerHTML=`
+  <div class="text-center">
+    <div class="glass rounded-full w-48 h-48 mx-auto flex items-center justify-center text-4xl">
+      🕒
+    </div>
+    <p class="mt-4">调整时钟到3点整</p>
+    <button onclick="alert('完成拼图！')" class="btn glass px-4 py-2 rounded-full mt-3">确认完成</button>
+  </div>
+  `;
+}
 </script>
-
 </body>
 </html>
