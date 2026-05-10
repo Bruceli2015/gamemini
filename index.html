@@ -1,0 +1,152 @@
+<!-- 新建 HTML，右下角可预览 -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>点击赚钱小游戏</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "微软雅黑", sans-serif;
+        }
+        body {
+            background: #121212;
+            color: #fff;
+            text-align: center;
+            padding-top: 50px;
+        }
+        .money {
+            font-size: 40px;
+            color: #ffd700;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+        .per {
+            font-size: 18px;
+            color: #ccc;
+            margin-bottom: 40px;
+        }
+        #clickBtn {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: linear-gradient(145deg,#ff9500,#ff3b30);
+            border: none;
+            font-size: 28px;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 0 30px #ff660080;
+            transition: 0.1s;
+        }
+        #clickBtn:active {
+            transform: scale(0.92);
+        }
+        .btns {
+            margin-top: 50px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+        .optBtn {
+            width: 260px;
+            padding: 15px;
+            font-size: 18px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        #autoBtn {
+            background: #007aff;
+            color: #fff;
+        }
+        #upBtn {
+            background: #34c759;
+            color: #fff;
+        }
+        .tip {
+            margin-top: 20px;
+            color: #888;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="money">💰 金钱：<span id="moneyNum">0</span> 元</div>
+    <div class="per">每次点击：<span id="perNum">1</span> 元 | 等级：<span id="level">1</span></div>
+
+    <button id="clickBtn">点击赚钱</button>
+
+    <div class="btns">
+        <button class="optBtn" id="autoBtn">开启自动点击</button>
+        <button class="optBtn" id="upBtn">升级点击 (花费500元)</button>
+    </div>
+
+    <div class="tip">升级后每次点击收益变多</div>
+
+<script>
+    // 游戏数据
+    let money = 0;
+    let perClick = 1;
+    let level = 1;
+    let autoOn = false;
+    let autoTimer = null;
+
+    // DOM
+    const moneyNum = document.getElementById('moneyNum');
+    const perNum = document.getElementById('perNum');
+    const levelDom = document.getElementById('level');
+    const clickBtn = document.getElementById('clickBtn');
+    const autoBtn = document.getElementById('autoBtn');
+    const upBtn = document.getElementById('upBtn');
+
+    // 手动点击
+    clickBtn.onclick = function(){
+        money += perClick;
+        updateUI();
+    }
+
+    // 自动点击开关
+    autoBtn.onclick = function(){
+        if(!autoOn){
+            autoOn = true;
+            autoBtn.innerText = "关闭自动点击";
+            autoTimer = setInterval(()=>{
+                money += perClick;
+                updateUI();
+            }, 300);
+        }else{
+            autoOn = false;
+            autoBtn.innerText = "开启自动点击";
+            clearInterval(autoTimer);
+        }
+    }
+
+    // 升级按钮 花500升级
+    upBtn.onclick = function(){
+        if(money >= 500){
+            money -= 500;
+            level++;
+            perClick += 1;
+            updateUI();
+        }else{
+            alert("钱不够！需要500元");
+        }
+    }
+
+    // 更新界面
+    function updateUI(){
+        moneyNum.innerText = money;
+        perNum.innerText = perClick;
+        levelDom.innerText = level;
+    }
+</script>
+
+</body>
+</html>
